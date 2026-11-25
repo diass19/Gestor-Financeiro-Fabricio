@@ -1,0 +1,53 @@
+<h2>
+    @if (id) {
+        Editar movimentação
+    } @else {
+        Cadastrar movimentação
+    }
+</h2>
+
+<form #form="ngForm" (ngSubmit)="salvar()">
+
+    <label>Descrição:</label>
+    <input type="text"
+           name="descricao"
+           [(ngModel)]="movimentacao.descricao"
+           required>
+
+    <label>Tipo:</label>
+    <select name="tipo"
+            [(ngModel)]="movimentacao.tipo"
+            required>
+        <option value="receita">Receita</option>
+        <option value="despesa">Despesa</option>
+    </select>
+
+    <label>Categoria:</label>
+    <input type="text"
+           name="categoria"
+           [(ngModel)]="movimentacao.categoria"
+           required>
+
+    <label>Valor:</label>
+    <input type="number"
+           name="valor"
+           [(ngModel)]="movimentacao.valor"
+           min="0.01"
+           step="0.01"
+           required>
+
+    <label>Data:</label>
+    <input type="date"
+           name="data"
+           [(ngModel)]="movimentacao.data"
+           required>
+
+    <button type="submit" [disabled]="form.invalid">
+        @if (id) {
+            Salvar alterações
+        } @else {
+            Cadastrar movimentação
+        }
+    </button>
+
+</form>

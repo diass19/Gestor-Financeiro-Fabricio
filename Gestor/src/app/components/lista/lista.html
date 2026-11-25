@@ -1,0 +1,83 @@
+<h2>Minhas movimentações</h2>
+
+<div class="resumo">
+
+    <div class="card receitas">
+        <h3>Receitas</h3>
+        <p>{{ receitas | currency:'BRL' }}</p>
+    </div>
+
+    <div class="card despesas">
+        <h3>Despesas</h3>
+        <p>{{ despesas | currency:'BRL' }}</p>
+    </div>
+
+    <div class="card saldo">
+        <h3>Saldo atual</h3>
+        <p>{{ saldo | currency:'BRL' }}</p>
+    </div>
+
+</div>
+
+<div class="filtro">
+    <label>Filtrar por categoria: </label>
+
+    <select [(ngModel)]="categoriaSelecionada">
+        <option value="">Todas as categorias</option>
+
+        @for (categoria of categorias; track categoria) {
+            <option [value]="categoria">
+                {{ categoria }}
+            </option>
+        }
+    </select>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Descrição</th>
+            <th>Tipo</th>
+            <th>Categoria</th>
+            <th>Valor</th>
+            <th>Data</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @for (m of movimentacoesFiltradas; track m._id) {
+            <tr>
+                <td>{{ m.descricao }}</td>
+                <td>{{ m.tipo }}</td>
+
+                <td>
+                    <span class="categoria"
+                          [style.backgroundColor]="corCategoria(m.categoria)">
+                        {{ m.categoria }}
+                    </span>
+                </td>
+
+                <td>{{ m.valor | currency:'BRL' }}</td>
+                <td>{{ m.data | date:'dd/MM/yyyy' }}</td>
+
+                <td>
+                    <button (click)="remover(m._id!)">
+                        Excluir
+                    </button>
+
+                    <button class="editar"
+                            (click)="editar(m._id!)">
+                        Editar
+                    </button>
+                </td>
+            </tr>
+        } @empty {
+            <tr>
+                <td colspan="6">
+                    Nenhuma movimentação encontrada.
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
